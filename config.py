@@ -23,12 +23,12 @@ class DevConfig(Config):
     DEBUG = True  # 调试模式
 
     # 数据库配置
-    DIALECT = 'postgresql'
-    DRIVER = 'psycopg2'
-    USERNAME = 'smallpot'
-    PASSWORD = 'yj'
-    HOST = '58.63.214.44'
-    PORT = '5432'
+    DIALECT = '*'
+    DRIVER = '*'
+    USERNAME = '*'
+    PASSWORD = '*'
+    HOST = '*'
+    PORT = '*'
     DATABASE = 'express_spider'
     SQLALCHEMY_DATABASE_URI = "{}+{}://{}:{}@{}:{}/{}".format(DIALECT, DRIVER, USERNAME, PASSWORD, HOST,
                                                                            PORT, DATABASE)
