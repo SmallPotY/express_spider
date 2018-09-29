@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+
+
+
+
+{% block content %}
+
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                快递信息列表
+            </div>
+            <div>
+                <div class="king-wrapper">
+                    <form class="form-inline king-search-form king-no-bg mt15 mb15 pull-left">
+                        <div class="form-group">
+                            <label>开始时间：</label>
+                            <div class="input-group">
+                                <input type="datetime-local" class="form-control" placeholder="请输入用户账号">
+                                <span class="input-group-addon"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>结束时间：</label>
+                            <div class="input-group">
+                                <input type="datetime-local" class="form-control" placeholder="请输入用户账号">
+                                <span class="input-group-addon"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>状态：</label>
+                            <div class="input-group">
+                                <select class="form-control">
+                                    <option value="1">已签收</option>
+                                    <option value="2">全部</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="查询批次号">
+                                    <span class="input-group-addon"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="king-btn king-info">查询</button>
+                    </form>
+
+
+                    <a href="user_add.html" class="king-btn king-info pull-right mt15 ml15">
+                        导出excel
+                    </a>
+                </div>
+
+
+                <div class="king-block king-block-bordered">
+                    <div class="king-block-header king-gray-light">
+
+                    </div>
+                    <div class="king-block-content">
+                        <table id="table" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>上传日期</th>
+                                <th>快递单号</th>
+                                <th>承运商</th>
+                                <th>货品标签</th>
+                                <th>揽收时间</th>
+                                <th>最后更新时间</th>
+                                <th>快递状态</th>
+                                <th>跟踪信息</th>
+                                <th>系统刷新时间</th>
+                                <th>详情</th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+
+{% block js %}
+    <!--JS-->
+    <script src="{{ url_for('static',filename='js/express_list/jquery.dataTables.js') }}"
+            type="text/javascript"></script>
+    <script src="{{ url_for('static',filename='js/express_list/dataTables.bootstrap.js') }}"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            //table2_demo4_js_start
+            //表格(DataTables)-4，综合示例
+            var language = {
+                search: '搜索：',
+                lengthMenu: "每页显示 _MENU_ 记录",
+                zeroRecords: "没找到相应的数据！",
+                info: "分页 _PAGE_ / _PAGES_",
+                infoEmpty: "暂无数据！",
+                infoFiltered: "(从 _MAX_ 条数据中搜索)",
+                paginate: {
+                    first: '首页',
+                    last: '尾页',
+                    previous: '上一页',
+                    next: '下一页',
+                }
+            }
+            $("#table").dataTable({
+                autoWidth: false,
+                lengthChange: true, //不允许用户改变表格每页显示的记录数
+                pageLength: 50, //每页显示几条数据
+                lengthMenu: [50, 100, 200], //每页显示选项
+                pagingType: 'full_numbers',
+                ajax: '{{ url_for('express.express_data') }}',
+                ordering: true,
+                columns: [
+                    {data: "id"},
+                    {data: "upload_time"} ,
+                    {data: "express_order"},
+                    {data: "carriers"},
+                    {data: "user_label"},
+                    {data: "took_time"},
+                    {data: "last_time"},
+                    {data: "state"},
+                    {data: "results"},
+                    {data: "update_time"},
+
+                    {
+                        data: null,
+                        orderable: false,
+                        render: function (data, type, row, meta) {
+                            return '<a class="king-btn king-default">查看详情</a>';
+                        }
+                    }
+                ],
+                language: language
+            });
+
+            var t = $("#table").DataTable();//获取datatables对象
+            //删除按钮绑定事件
+            $("#table tbody").on('click', 'a.del', function () {
+                var row = t.row($(this).parents('tr')),//获取按钮所在的行
+                    data = row.data();
+                    alert(data);
+            });
+            //table2_demo4_js_end
+        });
+
+        $('#page-2').addClass("active");
+    </script>
+{% endblock %}

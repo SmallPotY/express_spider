@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+
+<title>登陆</title>
+
+  <link href="{{ url_for('static',filename='login/style_log.css') }}" rel="stylesheet" type="text/css">
+
+</head>
+
+<body class="login">
+<div class="login_m">
+<div class="login_logo"><img src="{{ url_for('static',filename='login/logo.png') }}" width="350" height="70"></div>
+<div class="login_boder">
+
+<div class="login_padding" id="login_model">
+
+  <h1 id="title">快递跟踪系统</h1>
+
+    <form method="POST" action="#">
+      <label>
+          {{ form.user}}
+      </label>
+      <label>
+          {{form.pwd }}
+      </label>
+
+      <p class="forgot"><a id="iforget" href="javascript:void(0);">忘记密码?</a></p>
+      <div class="rem_sub">
+      <div class="rem_sub_l">
+      <input type="checkbox" name="checkbox" id="save_me">
+       <label for="checkbox">记住我</label>
+       </div>
+          {{ form.submit }}
+          {{ form.csrf_token }}
+
+      </div>
+
+    </form>
+</div>
+
+
+
+<br>
+
+
+
+</div>
+
+
+
+<!--login_padding  Sign up end-->
+</div><!--login_boder end-->
+</div><!--login_m end-->
+ <br> <br>
+<p align="center">
+    <a href="#"  target="_blank">广州源畅物流有限公司 #</a>
+</p>
+
+</body>
+</html>
